@@ -1,3 +1,5 @@
+![Coverage](.github/badges/jacoco.svg)
+
 # Meal Plan Admin 🍜 🗓️
 This is a meal plan administration application to help individuals keep track of their hired meal plan.
 - 📝 Create n-day based meal plans specifying the number of days and meals per day.
