@@ -32,8 +32,12 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
-    - name: jacoco-badge-generator
-      uses: cicirello/jacoco-badge-generator@v2.9.0
+    - name: Add coverage to PR
+      id: jacoco
+      uses: madrapps/jacoco-report@v1.3
+      permissions: write-all
       with:
-        generate-branches-badge: true
-        jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+          paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
