@@ -3,6 +3,7 @@ package com.example.mealplanadmin.controller;
 import com.example.mealplanadmin.model.CreatePlanDTO;
 import com.example.mealplanadmin.model.PlanDTO;
 import com.example.mealplanadmin.service.PlanService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ public class PlanController {
 
     final PlanService planService;
 
+    @Autowired
     public PlanController(PlanService planService) {
         this.planService = planService;
     }

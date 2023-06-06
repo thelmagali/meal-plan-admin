@@ -2,9 +2,7 @@ package com.example.mealplanadmin.model;
 
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
 public class PlanTest {
     @Test
     void emptyConstructorAndAccessors() {
