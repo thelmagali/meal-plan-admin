@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+meal-plan-admin,com.example.mealplanadmin.mapper,PlanEntityMapper,0,36,0,0,0,4,0,4,0,4
+meal-plan-admin,com.example.mealplanadmin.exception,TooManyPendingPlansException,5,0,0,0,2,0,2,0,2,0
+meal-plan-admin,com.example.mealplanadmin,MealPlanAdminApplication,5,3,0,0,2,1,1,1,1,1
+meal-plan-admin,com.example.mealplanadmin.model,SpecialDay,4,29,0,0,2,13,1,7,1,7
+meal-plan-admin,com.example.mealplanadmin.model,Plan,49,94,6,8,4,24,9,13,3,12
+meal-plan-admin,com.example.mealplanadmin.model,CreatePlanDTO,0,21,0,0,0,1,0,4,0,4
+meal-plan-admin,com.example.mealplanadmin.model,PlanDTO,0,27,0,0,0,1,0,5,0,5
+meal-plan-admin,com.example.mealplanadmin.service,DateServiceImpl,0,127,0,10,0,27,0,14,0,9
+meal-plan-admin,com.example.mealplanadmin.controller,PlanController,0,11,0,0,0,4,0,2,0,2
+meal-plan-admin,com.example.mealplanadmin.service.impl,PlanServiceImpl,26,100,4,4,4,25,5,8,1,8
