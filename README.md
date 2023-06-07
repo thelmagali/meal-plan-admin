@@ -8,6 +8,7 @@ This is a meal plan administration application to help individuals keep track of
 
 # Run
 ```
+cp .env.sample .env
 docker-compose up
 ```
  
