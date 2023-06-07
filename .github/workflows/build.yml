@@ -60,7 +60,7 @@ jobs:
           min-coverage-changed-files: 60
 
   update-coverage-badge:
-    name: Update JaCoCo coverage badge
+    name: Update coverage badge
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/main'
