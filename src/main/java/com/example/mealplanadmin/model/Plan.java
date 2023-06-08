@@ -9,7 +9,7 @@ public record Plan(Long id, LocalDate startDate, Integer totalDays, Integer meal
     }
 
     public static Plan fromEntity(PlanEntity planEntity) {
-        return new Plan(planEntity.getId(), planEntity.getStartDate(), planEntity.totalDays, planEntity.mealsPerDay);
+        return new Plan(planEntity.getId(), planEntity.getStartDate(), planEntity.getTotalDays(), planEntity.getMealsPerDay());
     }
 
     public PlanEntity toEntity() {
