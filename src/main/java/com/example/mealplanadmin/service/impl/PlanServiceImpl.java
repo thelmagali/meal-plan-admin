@@ -63,10 +63,11 @@ public class PlanServiceImpl implements PlanService {
             throw new TooManyPendingPlansException();
         } else if (activeAndPendingPlans.isEmpty()) {
             return getStartDateOrTomorrow(optionalStartDate);
+        } else {
+            var lastPlan = activeAndPendingPlans.get(0);
+            var endDateFromLast = dateService.calculateEndDate(lastPlan.startDate(), lastPlan.totalDays(), lastPlan.mealsPerDay());
+            return dateService.firstWorkingDay(endDateFromLast.plusDays(1));
         }
-        var lastPlan = activeAndPendingPlans.get(0);
-        var endDateFromLast = dateService.calculateEndDate(lastPlan.startDate(), lastPlan.totalDays(), lastPlan.mealsPerDay());
-        return dateService.firstWorkingDay(endDateFromLast.plusDays(1));
     }
 
     private LocalDate getStartDateOrTomorrow(Optional<LocalDate> optionalStartDate) {

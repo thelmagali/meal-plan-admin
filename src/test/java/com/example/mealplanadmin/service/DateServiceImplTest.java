@@ -50,4 +50,14 @@ public class DateServiceImplTest {
         when(specialDayRepository.findByDateGreaterThanEqualOrderByDateAsc(date)).thenReturn(List.of(specialDay));
         assertThat(dateService.calculateEndDate(date, totalDays, mealsPerDay)).isEqualTo(expectedEndDate);
     }
+
+    @Test
+    public void calculateEndDateWithoutSpecialDays() {
+        var totalDays = 2;
+        var mealsPerDay = 2;
+        var date = LocalDate.of(2023, Month.MAY, 16);
+        var expectedEndDate = LocalDate.of(2023, Month.MAY, 17);
+        when(specialDayRepository.findByDateGreaterThanEqualOrderByDateAsc(date)).thenReturn(List.of());
+        assertThat(dateService.calculateEndDate(date, totalDays, mealsPerDay)).isEqualTo(expectedEndDate);
+    }
 }
