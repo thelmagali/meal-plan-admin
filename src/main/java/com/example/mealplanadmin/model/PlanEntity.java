@@ -12,16 +12,16 @@ public class PlanEntity {
     private Long id;
 
     @Column(name = "start_date")
-    LocalDate startDate;
+    private LocalDate startDate;
 
     @Column(name = "total_days")
-    Integer totalDays;
+    private Integer totalDays;
 
     @Column(name = "meals_per_day")
-    Integer mealsPerDay;
+    private Integer mealsPerDay;
 
     @Column(name = "closed")
-    Boolean closed;
+    private Boolean closed;
 
     public PlanEntity(LocalDate startDate, Integer totalDays, Integer mealsPerDay) {
         this.startDate = startDate;
