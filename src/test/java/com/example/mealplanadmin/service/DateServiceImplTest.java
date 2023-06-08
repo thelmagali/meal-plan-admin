@@ -1,6 +1,5 @@
 package com.example.mealplanadmin.service;
 
-import com.example.mealplanadmin.model.Plan;
 import com.example.mealplanadmin.model.SpecialDay;
 import com.example.mealplanadmin.repository.SpecialDayRepository;
 import java.time.LocalDate;
@@ -45,11 +44,20 @@ public class DateServiceImplTest {
         var totalDays = 10;
         var mealsPerDay = 4;
         var date = LocalDate.of(2023, Month.MAY, 12);
-        var plan = new Plan(date, totalDays, mealsPerDay);
         var specialDate = LocalDate.of(2023, Month.MAY, 19);
         var specialDay = new SpecialDay(specialDate, 2);
         var expectedEndDate = LocalDate.of(2023, Month.MAY, 29);
         when(specialDayRepository.findByDateGreaterThanEqualOrderByDateAsc(date)).thenReturn(List.of(specialDay));
-        assertThat(dateService.calculateEndDate(plan)).isEqualTo(expectedEndDate);
+        assertThat(dateService.calculateEndDate(date, totalDays, mealsPerDay)).isEqualTo(expectedEndDate);
+    }
+
+    @Test
+    public void calculateEndDateWithoutSpecialDays() {
+        var totalDays = 2;
+        var mealsPerDay = 2;
+        var date = LocalDate.of(2023, Month.MAY, 16);
+        var expectedEndDate = LocalDate.of(2023, Month.MAY, 17);
+        when(specialDayRepository.findByDateGreaterThanEqualOrderByDateAsc(date)).thenReturn(List.of());
+        assertThat(dateService.calculateEndDate(date, totalDays, mealsPerDay)).isEqualTo(expectedEndDate);
     }
 }
