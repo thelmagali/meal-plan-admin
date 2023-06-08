@@ -16,6 +16,7 @@ public class PlanEntityTest {
         var mealsPerDay = 4;
         var totalDays = 30;
         var closed = true;
+        plan.setId(1L);
         plan.setStartDate(startDate);
         plan.setMealsPerDay(mealsPerDay);
         plan.setTotalDays(totalDays);
@@ -24,7 +25,7 @@ public class PlanEntityTest {
         assert (plan.getTotalDays() == totalDays);
         assert (plan.getStartDate().equals(startDate));
         assert (plan.getMealsPerDay() == mealsPerDay);
-        assert (plan.getId() == null);
+        assert (plan.getId() == 1L);
     }
 
     @Test

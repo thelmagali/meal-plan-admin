@@ -30,14 +30,6 @@ public class PlanEntity {
         this.closed = false;
     }
 
-    public PlanEntity(Long id, LocalDate startDate, Integer totalDays, Integer mealsPerDay) {
-        this.id = id;
-        this.startDate = startDate;
-        this.totalDays = totalDays;
-        this.mealsPerDay = mealsPerDay;
-        this.closed = false;
-    }
-
     public PlanEntity() {
 
     }
