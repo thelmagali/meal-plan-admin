@@ -37,15 +37,10 @@ public class PlanControllerTest {
         var totalDays = 30;
         var mealsPerDay = 4;
         var requestObject = new CreatePlanDTO(totalDays, mealsPerDay, Optional.of(today));
-        var expectedPlan = new PlanDTO(today, totalDays, mealsPerDay, Optional.empty());
+        var expectedPlan = new PlanDTO(today, totalDays, mealsPerDay, today.minusDays(1));
         var expectedJson = objectMapper.writeValueAsString(expectedPlan);
         when(planService.create(any())).thenReturn(expectedPlan);
-        mockMvc.perform(post("/plans")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(requestObject)))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json(expectedJson));
+        mockMvc.perform(post("/plans").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(requestObject))).andDo(print()).andExpect(status().isOk()).andExpect(content().json(expectedJson));
 
     }
 }

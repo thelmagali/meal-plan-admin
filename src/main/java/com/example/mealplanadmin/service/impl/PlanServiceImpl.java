@@ -1,7 +1,6 @@
 package com.example.mealplanadmin.service.impl;
 
 import com.example.mealplanadmin.exception.TooManyPendingPlansException;
-import com.example.mealplanadmin.mapper.PlanEntityMapper;
 import com.example.mealplanadmin.model.CreatePlanDTO;
 import com.example.mealplanadmin.model.Plan;
 import com.example.mealplanadmin.model.PlanDTO;
@@ -17,15 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PlanServiceImpl implements PlanService {
 
-    PlanEntityMapper planEntityMapper;
-
     PlanRepository planRepository;
 
     DateService dateService;
 
     @Autowired
-    public PlanServiceImpl(PlanEntityMapper planEntityMapper, PlanRepository planRepository, DateService dateService) {
-        this.planEntityMapper = planEntityMapper;
+    public PlanServiceImpl(PlanRepository planRepository, DateService dateService) {
         this.planRepository = planRepository;
         this.dateService = dateService;
     }
@@ -35,8 +31,8 @@ public class PlanServiceImpl implements PlanService {
     public PlanDTO create(CreatePlanDTO createPlanDTO) {
         updatePlansStatus();
         Plan plan = savePlan(createPlanDTO);
-        var endDate = dateService.calculateEndDate(plan);
-        return planEntityMapper.toDTO(plan, endDate);
+        var endDate = dateService.calculateEndDate(plan.startDate(), plan.totalDays(), plan.mealsPerDay());
+        return PlanDTO.fromPlan(plan, endDate);
     }
 
     private void updatePlansStatus() {
@@ -45,9 +41,9 @@ public class PlanServiceImpl implements PlanService {
     }
 
     private void closePlanIfEnded(Plan plan) {
-        var endDate = dateService.calculateEndDate(plan);
+        var endDate = dateService.calculateEndDate(plan.startDate(), plan.totalDays(), plan.mealsPerDay());
         if (isPastDate(endDate)) {
-            planRepository.closePlan(plan.getId());
+            planRepository.closePlan(plan.id());
         }
     }
 
@@ -57,8 +53,8 @@ public class PlanServiceImpl implements PlanService {
 
     private Plan savePlan(CreatePlanDTO createPlanDTO) {
         var startDate = calculateNewPlanStartDate(createPlanDTO.startDate());
-        var planEntity = new Plan(startDate, createPlanDTO.totalDays(), createPlanDTO.mealsPerDay());
-        return planRepository.save(planEntity);
+        var plan = new Plan(startDate, createPlanDTO.totalDays(), createPlanDTO.mealsPerDay());
+        return planRepository.save(plan);
     }
 
     private LocalDate calculateNewPlanStartDate(Optional<LocalDate> optionalStartDate) {
@@ -69,7 +65,7 @@ public class PlanServiceImpl implements PlanService {
             return getStartDateOrTomorrow(optionalStartDate);
         }
         var lastPlan = activeAndPendingPlans.get(0);
-        var endDateFromLast = dateService.calculateEndDate(lastPlan);
+        var endDateFromLast = dateService.calculateEndDate(lastPlan.startDate(), lastPlan.totalDays(), lastPlan.mealsPerDay());
         return dateService.firstWorkingDay(endDateFromLast.plusDays(1));
     }
 

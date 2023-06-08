@@ -20,14 +20,11 @@ public class SpecialDayTest {
 
     @Test
     void constructor() {
-        var startDate = LocalDate.now();
+        var date = LocalDate.now();
         var mealsPerDay = 4;
-        var totalDays = 30;
-        var plan = new Plan(startDate, totalDays, mealsPerDay);
-        assert (!plan.getClosed());
-        assert (plan.getTotalDays() == totalDays);
-        assert (plan.getStartDate().equals(startDate));
-        assert (plan.getMealsPerDay() == mealsPerDay);
+        var plan = new SpecialDay(date, mealsPerDay);
+        assert (plan.getMeals() == mealsPerDay);
+        assert (plan.getDate().equals(date));
         assert (plan.getId() == null);
     }
 }

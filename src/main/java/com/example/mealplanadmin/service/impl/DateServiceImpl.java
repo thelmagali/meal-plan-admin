@@ -1,8 +1,8 @@
-package com.example.mealplanadmin.service;
+package com.example.mealplanadmin.service.impl;
 
-import com.example.mealplanadmin.model.Plan;
 import com.example.mealplanadmin.model.SpecialDay;
 import com.example.mealplanadmin.repository.SpecialDayRepository;
+import com.example.mealplanadmin.service.DateService;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,9 +23,7 @@ public class DateServiceImpl implements DateService {
 
 
     @Autowired
-    public DateServiceImpl(@Value("${holidays}") List<LocalDate> holidays,
-                           @Value("${working.days}") Set<String> workingDaysString,
-                           SpecialDayRepository specialDayRepository) {
+    public DateServiceImpl(@Value("${holidays}") List<LocalDate> holidays, @Value("${working.days}") Set<String> workingDaysString, SpecialDayRepository specialDayRepository) {
         this.holidays = holidays;
         this.workingDays = workingDaysString.stream().map(DayOfWeek::valueOf).collect(Collectors.toSet());
         this.specialDayRepository = specialDayRepository;
@@ -40,13 +38,13 @@ public class DateServiceImpl implements DateService {
     }
 
     @Override
-    public LocalDate calculateEndDate(Plan plan) {
-        var remainingMeals = plan.getTotalDays() * plan.getMealsPerDay();
-        var currentDate = plan.getStartDate().minusDays(1);
-        var futureSpecialDays = specialDayRepository.findByDateGreaterThanEqualOrderByDateAsc(plan.getStartDate());
+    public LocalDate calculateEndDate(LocalDate startDate, Integer totalDays, Integer mealsPerDay) {
+        var remainingMeals = totalDays * mealsPerDay;
+        var currentDate = startDate.minusDays(1);
+        var futureSpecialDays = specialDayRepository.findByDateGreaterThanEqualOrderByDateAsc(startDate);
         while (remainingMeals > 0) {
             currentDate = currentDate.plusDays(1);
-            remainingMeals = remainingMeals - getMealsForDate(currentDate, plan.getMealsPerDay(), futureSpecialDays);
+            remainingMeals = remainingMeals - getMealsForDate(currentDate, mealsPerDay, futureSpecialDays);
             futureSpecialDays = dropPreviousSpecialDates(currentDate, futureSpecialDays);
         }
         return currentDate;
@@ -62,12 +60,7 @@ public class DateServiceImpl implements DateService {
     // Otherwise, return the default meals per day
     private int getMealsForDate(LocalDate date, Integer mealsPerDay, List<SpecialDay> futureSpecialDays) {
         if (isWorkingDay(date)) {
-            return futureSpecialDays
-                    .stream()
-                    .findFirst()
-                    .filter(sd -> sd.getDate().equals(date))
-                    .map(SpecialDay::getMeals)
-                    .orElse(mealsPerDay);
+            return futureSpecialDays.stream().findFirst().filter(sd -> sd.getDate().equals(date)).map(SpecialDay::getMeals).orElse(mealsPerDay);
         }
         return 0;
     }

@@ -3,10 +3,10 @@ package com.example.mealplanadmin.model;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
-public class PlanTest {
+public class PlanEntityTest {
     @Test
     void emptyConstructorAndAccessors() {
-        var plan = new Plan();
+        var plan = new PlanEntity();
         assert (plan.getClosed() == null);
         assert (plan.getTotalDays() == null);
         assert (plan.getStartDate() == null);
@@ -32,7 +32,7 @@ public class PlanTest {
         var startDate = LocalDate.now();
         var mealsPerDay = 4;
         var totalDays = 30;
-        var plan = new Plan(startDate, totalDays, mealsPerDay);
+        var plan = new PlanEntity(startDate, totalDays, mealsPerDay);
         assert (!plan.getClosed());
         assert (plan.getTotalDays() == totalDays);
         assert (plan.getStartDate().equals(startDate));
