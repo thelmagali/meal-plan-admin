@@ -17,13 +17,13 @@ public interface PlanRepository extends JpaRepository<PlanEntity, Long> {
     void closePlan(Long id);
 
 
-    @Query("select com.example.mealplanadmin.model.Plan.fromPlan(p) from PlanEntity p where p.closed = false")
+    @Query("select new com.example.mealplanadmin.model.Plan(p) from PlanEntity p where p.closed = false")
     List<Plan> findAllByClosedIsFalse();
 
     @Transactional
     @Modifying
     default Plan save(Plan planRecord) {
         var plan = save(planRecord.toEntity());
-        return Plan.fromEntity(plan);
+        return new Plan(plan);
     }
 }

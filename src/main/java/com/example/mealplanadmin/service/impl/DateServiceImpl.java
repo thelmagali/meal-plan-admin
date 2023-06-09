@@ -53,14 +53,14 @@ public class DateServiceImpl implements DateService {
     // Deletes all the special dates that are before the current date.
     // This is to avoid traversing already visited dates multiple times
     private List<SpecialDay> dropPreviousSpecialDates(final LocalDate currentDate, List<SpecialDay> futureSpecialDates) {
-        return futureSpecialDates.stream().dropWhile(sp -> sp.getDate().isBefore(currentDate)).toList();
+        return futureSpecialDates.stream().dropWhile(sp -> sp.date().isBefore(currentDate)).toList();
     }
 
     // If `date` is a special date, it should be the first element of `futureSpecialDays`, and we return the meals of that day.
     // Otherwise, return the default meals per day
-    private int getMealsForDate(LocalDate date, Integer mealsPerDay, List<SpecialDay> futureSpecialDays) {
+    private int getMealsForDate(LocalDate date, Integer mealsPerDay, List<SpecialDay> futureSpecialDayEntities) {
         if (isWorkingDay(date)) {
-            return futureSpecialDays.stream().findFirst().filter(sd -> sd.getDate().equals(date)).map(SpecialDay::getMeals).orElse(mealsPerDay);
+            return futureSpecialDayEntities.stream().findFirst().filter(sd -> sd.date().equals(date)).map(SpecialDay::meals).orElse(mealsPerDay);
         }
         return 0;
     }
