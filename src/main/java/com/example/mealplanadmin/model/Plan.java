@@ -13,6 +13,8 @@ public record Plan(Long id, LocalDate startDate, Integer totalDays, Integer meal
     }
 
     public PlanEntity toEntity() {
-        return new PlanEntity(startDate, totalDays, mealsPerDay);
+        var entity = new PlanEntity(startDate, totalDays, mealsPerDay);
+        entity.setId(id);
+        return entity;
     }
 }

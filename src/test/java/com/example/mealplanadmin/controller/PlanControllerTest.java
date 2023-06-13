@@ -2,6 +2,7 @@ package com.example.mealplanadmin.controller;
 
 import com.example.mealplanadmin.model.CreatePlanDTO;
 import com.example.mealplanadmin.model.PlanDTO;
+import com.example.mealplanadmin.repository.SpecialDayRepository;
 import com.example.mealplanadmin.service.PlanService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
@@ -40,7 +41,7 @@ public class PlanControllerTest {
         var expectedPlan = new PlanDTO(today, totalDays, mealsPerDay, today.minusDays(1));
         var expectedJson = objectMapper.writeValueAsString(expectedPlan);
         when(planService.create(any())).thenReturn(expectedPlan);
-        mockMvc.perform(post("/plans").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(requestObject))).andDo(print()).andExpect(status().isOk()).andExpect(content().json(expectedJson));
-
+        mockMvc.perform(post("/plans")
+                .contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(requestObject))).andDo(print()).andExpect(status().isOk()).andExpect(content().json(expectedJson));
     }
 }
