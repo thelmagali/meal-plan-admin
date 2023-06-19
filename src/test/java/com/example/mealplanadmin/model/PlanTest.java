@@ -35,7 +35,7 @@ public class PlanTest {
         var totalDays = 10;
         var mealsPerDay = 5;
         var entity = new PlanEntity(startDate, totalDays, mealsPerDay);
-        var plan = Plan.fromEntity(entity);
+        var plan = new Plan(entity);
         assertThat(plan).isEqualTo(new Plan(startDate, totalDays, mealsPerDay));
     }
 }

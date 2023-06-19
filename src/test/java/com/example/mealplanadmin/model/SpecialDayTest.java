@@ -2,29 +2,16 @@ package com.example.mealplanadmin.model;
 
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpecialDayTest {
     @Test
-    void emptyConstructorAndAccessors() {
-        var specialDay = new SpecialDay();
-        assert (specialDay.getMeals() == null);
-        assert (specialDay.getDate() == null);
-        assert (specialDay.getId() == null);
-        var date = LocalDate.now();
-        var meals = 4;
-        specialDay.setDate(date);
-        specialDay.setMeals(meals);
-        assert (specialDay.getDate() == date);
-        assert (specialDay.getMeals() == meals);
-    }
-
-    @Test
-    void constructor() {
-        var date = LocalDate.now();
-        var mealsPerDay = 4;
-        var plan = new SpecialDay(date, mealsPerDay);
-        assert (plan.getMeals() == mealsPerDay);
-        assert (plan.getDate().equals(date));
-        assert (plan.getId() == null);
+    void constructorTest() {
+        var specialDayEntity = new SpecialDayEntity(LocalDate.now(), 3);
+        specialDayEntity.setId(1L);
+        var specialDay = new SpecialDay(specialDayEntity);
+        assertThat(specialDay.id()).isEqualTo(specialDayEntity.getId());
+        assertThat(specialDay.date()).isEqualTo(specialDayEntity.getDate());
+        assertThat(specialDay.meals()).isEqualTo(specialDayEntity.getMeals());
     }
 }

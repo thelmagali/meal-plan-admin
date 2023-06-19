@@ -45,7 +45,7 @@ public class DateServiceImplTest {
         var mealsPerDay = 4;
         var date = LocalDate.of(2023, Month.MAY, 12);
         var specialDate = LocalDate.of(2023, Month.MAY, 19);
-        var specialDay = new SpecialDay(specialDate, 2);
+        var specialDay = new SpecialDay(1L, specialDate, 2);
         var expectedEndDate = LocalDate.of(2023, Month.MAY, 29);
         when(specialDayRepository.findByDateGreaterThanEqualOrderByDateAsc(date)).thenReturn(List.of(specialDay));
         assertThat(dateService.calculateEndDate(date, totalDays, mealsPerDay)).isEqualTo(expectedEndDate);

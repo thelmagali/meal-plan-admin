@@ -8,11 +8,13 @@ public record Plan(Long id, LocalDate startDate, Integer totalDays, Integer meal
         this(null, startDate, totalDays, mealsPerDay);
     }
 
-    public static Plan fromEntity(PlanEntity planEntity) {
-        return new Plan(planEntity.getId(), planEntity.getStartDate(), planEntity.getTotalDays(), planEntity.getMealsPerDay());
+    public Plan(PlanEntity planEntity) {
+        this(planEntity.getId(), planEntity.getStartDate(), planEntity.getTotalDays(), planEntity.getMealsPerDay());
     }
 
     public PlanEntity toEntity() {
-        return new PlanEntity(startDate, totalDays, mealsPerDay);
+        var entity = new PlanEntity(startDate, totalDays, mealsPerDay);
+        entity.setId(id);
+        return entity;
     }
 }
