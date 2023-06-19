@@ -1,6 +1,7 @@
 package com.example.mealplanadmin.controller;
 
-import com.example.mealplanadmin.model.SpecialDay;
+import com.example.mealplanadmin.model.EmptyJson;
+import com.example.mealplanadmin.model.SpecialDayDTO;
 import com.example.mealplanadmin.service.SpecialDayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +21,8 @@ public class SpecialDayController {
     }
 
     @PutMapping
-    public void modifyDay(@RequestBody SpecialDay specialDayDTO) {
+    public EmptyJson modifyDay(@RequestBody SpecialDayDTO specialDayDTO) {
         specialDayService.upsert(specialDayDTO);
+        return new EmptyJson();
     }
 }

@@ -1,6 +1,6 @@
 package com.example.mealplanadmin.service.impl;
 
-import com.example.mealplanadmin.model.SpecialDay;
+import com.example.mealplanadmin.model.SpecialDayDTO;
 import com.example.mealplanadmin.repository.SpecialDayRepository;
 import com.example.mealplanadmin.service.SpecialDayService;
 import jakarta.transaction.Transactional;
@@ -12,6 +12,7 @@ public class SpecialDayServiceImpl implements SpecialDayService {
 
     private final SpecialDayRepository specialDayRepository;
 
+
     @Autowired
     public SpecialDayServiceImpl(SpecialDayRepository specialDayRepository) {
         this.specialDayRepository = specialDayRepository;
@@ -19,7 +20,7 @@ public class SpecialDayServiceImpl implements SpecialDayService {
 
     @Override
     @Transactional
-    public void upsert(SpecialDay specialDay) {
-        specialDayRepository.upsert(specialDay);
+    public void upsert(SpecialDayDTO specialDayDTO) {
+        specialDayRepository.upsert(specialDayDTO.toSpecialDay());
     }
 }

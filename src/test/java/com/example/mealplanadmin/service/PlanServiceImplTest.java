@@ -5,28 +5,23 @@ import com.example.mealplanadmin.model.CreatePlanDTO;
 import com.example.mealplanadmin.model.Plan;
 import com.example.mealplanadmin.model.PlanDTO;
 import com.example.mealplanadmin.repository.PlanRepository;
+import com.example.mealplanadmin.service.impl.PlanServiceImpl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 public class PlanServiceImplTest {
 
-    @Autowired
-    private PlanService planService;
+    private final PlanRepository planRepository = Mockito.mock(PlanRepository.class);
 
-    @MockBean
-    private PlanRepository planRepository;
+    private final DateService dateService = Mockito.mock(DateService.class);
 
-    @MockBean
-    private DateService dateService;
+    private final PlanService planService = new PlanServiceImpl(planRepository, dateService);
 
     @Test
     public void createPlanWithoutCleanup() {

@@ -1,8 +1,8 @@
 package com.example.mealplanadmin.service;
 
-import com.example.mealplanadmin.model.SpecialDay;
+import com.example.mealplanadmin.model.SpecialDayDTO;
 
 public interface SpecialDayService {
 
-    void upsert(SpecialDay specialDayDTO);
+    void upsert(SpecialDayDTO specialDayDTO);
 }
