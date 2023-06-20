@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Login to GitLab
         uses: docker/login-action@v2
         with:
@@ -15,7 +17,6 @@ jobs:
           username: ${{ secrets.CI_REGISTRY_USER }}
           password: ${{ secrets.CI_REGISTRY_PASSWORD }}
       - name: Build the Docker image
-        uses: actions/checkout@v3
         run: |
           docker build -t registry.gitlab.com/tmbh/meal-plan-admin-pipeline:${{ github.sha }} .
           docker push registry.gitlab.com/tmbh/meal-plan-admin-pipeline:${{ github.sha }}
