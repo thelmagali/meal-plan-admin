@@ -5,12 +5,20 @@ on:
     branches: [ "main" ]
     tags: [ 'v*.*.*' ]
 jobs:
+  login:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitLab
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ vars.CI_REGISTRY }}
+          username: ${{ vars.CI_REGISTRY_USER }}
+          password: ${{ vars.CI_REGISTRY_PASSWORD }}
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
         run: |
-          docker login -u ${{ vars.CI_REGISTRY_USER}} -p ${{ vars.CI_REGISTRY_PASSWORD }} $CI_REGISTRY
           docker build -t registry.gitlab.com/tmbh/meal-plan-admin-pipeline:$(date +%s) .
           docker push registry.gitlab.com/tmbh/meal-plan-admin-pipeline
