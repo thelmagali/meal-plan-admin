@@ -2,25 +2,23 @@ package com.example.mealplanadmin.service;
 
 import com.example.mealplanadmin.model.SpecialDay;
 import com.example.mealplanadmin.repository.SpecialDayRepository;
+import com.example.mealplanadmin.service.impl.DateServiceImpl;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.Mockito;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(properties = { "holidays=2023-05-01,2023-05-15","working.days=MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY" })
 public class DateServiceImplTest {
+    private final SpecialDayRepository specialDayRepository = Mockito.mock(SpecialDayRepository.class);
 
-    @Autowired
-    private DateService dateService;
-
-    @MockBean
-    private SpecialDayRepository specialDayRepository;
-
+    private final DateService dateService = new DateServiceImpl(
+            List.of(LocalDate.parse("2023-05-01"), LocalDate.parse("2023-05-15")),
+            Set.of("MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"),
+            specialDayRepository);
 
     /*
     Being the current date the 29 of April (Saturday), the first working day should be 2 of May (Tuesday), because the

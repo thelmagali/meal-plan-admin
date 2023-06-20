@@ -7,13 +7,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.example.mealplanadmin.config.SecurityConfig;
 import java.time.LocalDate;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,7 +26,8 @@ import com.example.mealplanadmin.model.PlanDTO;
 import com.example.mealplanadmin.service.PlanService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(value = PlanController.class)
+@WebMvcTest(value = PlanController.class, properties = {"api.secret=myApiSecret"}, excludeAutoConfiguration = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
+@Import(SecurityConfig.class)
 class PlanControllerTest {
 
     @Autowired
@@ -45,7 +50,8 @@ class PlanControllerTest {
         when(planService.create(any())).thenReturn(expectedPlan);
         mockMvc.perform(post("/plans")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(requestObject))).andDo(print()).andExpect(status().isOk())
+                        .header("X-API-KEY", "myApiSecret")
+                        .content(objectMapper.writeValueAsString(requestObject))).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(expectedJson));
     }
 }
