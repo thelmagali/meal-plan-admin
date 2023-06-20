@@ -1,4 +1,4 @@
-name: Docker
+name: Push docker image
 
 on:
   push:
@@ -16,6 +16,7 @@ jobs:
           password: ${{ secrets.CI_REGISTRY_PASSWORD }}
   build:
     runs-on: ubuntu-latest
+    needs: login
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
