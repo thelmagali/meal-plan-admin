@@ -15,7 +15,7 @@ services:
   web:
     build: .
     ports:
-      - "8080:8080"
+      - "8181:8181"
     environment:
       DB_PASSWORD: $DB_PASSWORD
       DB_USERNAME: $DB_USER

@@ -1,6 +1,6 @@
 FROM gradle:7.6.1-jdk17
 VOLUME /tmp
-EXPOSE 8080
+EXPOSE 8181
 COPY . /app
 WORKDIR /app
 RUN gradle build --no-daemon
