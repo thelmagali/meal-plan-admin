@@ -3,5 +3,5 @@ VOLUME /tmp
 EXPOSE 8080
 COPY . /app
 WORKDIR /app
-RUN gradle build
+RUN gradle build --no-daemon
 ENTRYPOINT ["java","-jar","build/libs/meal-plan-admin.jar"]
